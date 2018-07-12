@@ -217,48 +217,63 @@ client.on('message', message => {
   console.log('[id] Send By: ' + message.author.username)
     }
 });
- const cuttweet = [
-     'كت تويت ‏| تخيّل لو أنك سترسم شيء وحيد فيصبح حقيقة، ماذا سترسم؟',
-     'كت تويت | أكثر شيء يُسكِت الطفل برأيك؟',
-     'كت تويت | الحرية لـ ... ؟',
-     'كت تويت | قناة الكرتون المفضلة في طفولتك؟',
-     'كت تويت ‏| كلمة للصُداع؟',
-     'كت تويت ‏| ما الشيء الذي يُفارقك؟',
-     'كت تويت | موقف مميز فعلته مع شخص ولا يزال يذكره لك؟',
-     'كت تويت ‏| أيهما ينتصر، الكبرياء أم الحب؟',
-     'كت تويت | بعد ١٠ سنين ايش بتكون ؟',
-     'كت تويت ‏| مِن أغرب وأجمل الأسماء التي مرت عليك؟',
-     '‏كت تويت | عمرك شلت مصيبة عن شخص برغبتك ؟',
-     'كت تويت | أكثر سؤال وجِّه إليك مؤخرًا؟',
-     '‏كت تويت | ما هو الشيء الذي يجعلك تشعر بالخوف؟',
-     '‏كت تويت | وش يفسد الصداقة؟',
-     '‏كت تويت | شخص لاترفض له طلبا ؟',
-     '‏كت تويت | كم مره خسرت شخص تحبه؟.',
-     '‏كت تويت | كيف تتعامل مع الاشخاص السلبيين ؟',
-     '‏كت تويت | كلمة تشعر بالخجل اذا قيلت لك؟',
-     '‏كت تويت | جسمك اكبر من عٌمرك او العكسّ ؟!',
-     '‏كت تويت |أقوى كذبة مشت عليك ؟',
-     '‏كت تويت | تتأثر بدموع شخص يبكي قدامك قبل تعرف السبب ؟',
-     'كت تويت | هل حدث وضحيت من أجل شخصٍ أحببت؟',
-     '‏كت تويت | أكثر تطبيق تستخدمه مؤخرًا؟',
-     '‏كت تويت | ‏اكثر شي يرضيك اذا زعلت بدون تفكير ؟',
-     '‏كت تويت | وش محتاج عشان تكون مبسوط ؟',
-     '‏كت تويت | مطلبك الوحيد الحين ؟',
-     '‏كت تويت | هل حدث وشعرت بأنك ارتكبت أحد الذنوب أثناء الصيام؟',
-]
- 
- client.on('message', message => {
-   if (message.content.startsWith("كت تويت")) {
-                if(!message.channel.guild) return message.reply('** This command only for servers**');
-  var embed = new Discord.RichEmbed()
-  .setColor('RANDOM')
-   .setThumbnail(message.author.avatarURL)
- .addField('لعبه كت تويت' ,
-  `${cuttweet[Math.floor(Math.random() * cuttweet.length)]}`)
-  message.channel.sendEmbed(embed);
-  console.log('[id] Send By: ' + message.author.username)
-    }
+const db = require('quick.db')
+const prefix = '*';
+client.on('message', async message => {
+   if(message.content.startsWith(prefix + "credits")) {
+ let args = message.content.split(' ').slice(1);
+
+var user = message.mentions.users.first() || message.author;
+        
+        var balance = await db.fetch(`userBalance_${user.id}`)
+        
+        if (balance === null) balance = 50;
+        
+        var embed = new Discord.RichEmbed()
+        .setTitle('Coin Balance')
+        .setDescription(`${user.username}, **your balance:\n:dollar: $${balance}**`)
+        .setColor('#ffffff')
+        .setFooter('Requested By ' + message.author.tag, message.author.avatarURL)
+        message.channel.send(embed)
+
+}
 });
+const ms = require('ms')
+client.on('message', async message => {
+   if(message.content.startsWith("#daily")) {
+    let cooldown = 8.64e+7,
+    amount = 250
+
+    let lastDaily = await db.fetch(`lastDaily_${message.author.id}`)
+    try {
+    db.fetch(`userBalance_${message.member.id}`).then(bucks => {
+    if(bucks == null){
+        db.set(`userBalance_${message.member.id}`, 50)}
+
+    else if (lastDaily !== null && cooldown - (Date.now() - lastDaily) > 0) {
+        let timeObj = ms(cooldown - (Date.now() - lastDaily))
+
+        let lastDailyEmbed = new Discord.RichEmbed()
+        .setAuthor(`Next Daily`)
+        .setColor('#ffffff')
+        .setDescription(`You sucessfully collected this, you must wait to collect next dily. Time Left: **${timeObj}**!`)
+        .setFooter('Requested By ' + message.author.tag, message.author.avatarURL)
+        message.channel.send(lastDailyEmbed)
+    } else {
+        db.set(`lastDaily_${message.author.id}`, Date.now());
+        db.add(`userBalance_${message.member.id}`, amount).then(i => {
+          var discord = require('discord.js')
+          var embed = new Discord.RichEmbed()
+          .setTitle('Todays Daily')
+          .setDescription(`Sucessfully collected :dollar:$${amount}`)
+          .setColor('#ffffff')
+          .setFooter('Requested By ' + message.author.tag, message.author.avatarURL)
+          message.channel.send(embed);
+        })}
+    })} catch(err) {console.log(err)}
+}
+});
+
 
 
 
