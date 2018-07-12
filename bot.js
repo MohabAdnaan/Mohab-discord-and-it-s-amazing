@@ -217,28 +217,6 @@ client.on('message', message => {
   console.log('[id] Send By: ' + message.author.username)
     }
 });
-const db = require('quick.db')
-const prefix = '*';
-client.on('message', async message => {
-   if(message.content.startsWith(prefix + "credits")) {
- let args = message.content.split(' ').slice(1);
-
-var user = message.mentions.users.first() || message.author;
-        
-        var balance = await db.fetch(`userBalance_${user.id}`)
-        
-        if (balance === null) balance = 50;
-        
-        var embed = new Discord.RichEmbed()
-        .setTitle('Coin Balance')
-        .setDescription(`${user.username}, **your balance:\n:dollar: $${balance}**`)
-        .setColor('#ffffff')
-        .setFooter('Requested By ' + message.author.tag, message.author.avatarURL)
-        message.channel.send(embed)
-
-}
-});
-
 
 
 
