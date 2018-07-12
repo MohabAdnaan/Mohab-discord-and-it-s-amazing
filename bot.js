@@ -257,7 +257,18 @@ if(mentionned){
 message.channel.sendEmbed(embed);
 }
 });
+const Discord = require("discord.js");
+const client = new Discord.Client();
 
+
+
+client.on("ready", () => {
+    setInterval(function(){
+        client.guilds.get("ايدي السيرفر").roles.find("name", "Owner").edit({
+            color : "RANDOM"
+        });
+    },1000)
+})
 
 
 
