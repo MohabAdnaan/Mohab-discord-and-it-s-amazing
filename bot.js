@@ -257,26 +257,6 @@ if(mentionned){
 message.channel.sendEmbed(embed);
 }
 });
-client.on('message',async function (message) =>  {
-const prefix = "+";
-if (message.content.startsWith(prefix+'#'))
-    {
-        var members = []
-        let evidence = message.content.split(" ").slice(1,2).join(" ")
-        let reason = message.content.split(" ").slice(2).join(" ")
-        if (!reason) return message.reply(`**${prefix}apply [تقديمك] [رابط مقطعك]**`)
-        if(!evidence.match(linkreg)) return message.channel.send(`**${prefix}apply [تقديمك] [رابط مقطعك]**`)
-        if(!evidence) return message.reply(`راجاً ضع رابط مقطع لتقديمك`)
-        var embed = new Discord.RichEmbed()
-            .setTitle(`تقديم من ${message.author.username}`)
-            .addField(`التقديم`, "**`\`\`\"+ reason + "`\`\`\**")
-            .addField(`رابط المقطع`, evidence)
-            .setColor(`GREEN`)
-            client.channels.get("حط ايدي الشنل هنا").send(embed)
-            members.push(message.author.id);
-            message.channel.send(`${mentions} تم تقديم طلبك...`)
-        }  
-});
 
 
 
