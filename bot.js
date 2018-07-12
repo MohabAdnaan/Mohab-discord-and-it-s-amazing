@@ -48,7 +48,10 @@ client.user.setGame(`Nothing`,"http://twitch.tv/S-F")
 
      
 }); 
-
+client.on('message', msg => {
+  if(msg.content === 'السلام عليكم')
+  msg.reply('عليكم السلام ')
+});
 
 
 
