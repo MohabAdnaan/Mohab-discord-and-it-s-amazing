@@ -224,6 +224,41 @@ client.on('message', message => {
     return message.reply(`**حبي ممنوع نشر روابط الفيس بوك :joy: **`)
     }
 });
+//server-avatar
+var prefix = "+";
+client.on("message", message => {    
+    if(!message.channel.guild) return;
+if(message.author.bot) return;
+if(message.content === prefix + "server-av"){ 
+    const embed = new Discord.RichEmbed()
+
+.setTitle(`صورة ** ${message.guild.name} **`)
+.setAuthor(message.author.username, message.guild.iconrURL)
+.setColor('RANDOM')
+.setImage(message.guild.iconURL)
+
+message.channel.send({embed});
+}
+});
+
+//avatar
+var prefix = "+";
+client.on('message', message => {
+if (message.content.startsWith(prefix + "avatar")) {
+  var mentionned = message.mentions.users.first();
+var x5bzm;
+if(mentionned){
+    var x5bzm = mentionned;
+} else {
+    var x5bzm = message.author;
+    
+}
+  const embed = new Discord.RichEmbed()
+  .setColor("RANDOM")
+  .setImage(`${x5bzm.avatarURL}`)
+message.channel.sendEmbed(embed);
+}
+});
 
 
 
