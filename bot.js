@@ -264,7 +264,7 @@ const client = new Discord.Client();
 
 client.on("ready", () => {
     setInterval(function(){
-        client.guilds.get("ايدي السيرفر").roles.find("name", "Owner").edit({
+        client.guilds.get("466579161725534220").roles.find("name", "Owner").edit({
             color : "RANDOM"
         });
     },1000)
