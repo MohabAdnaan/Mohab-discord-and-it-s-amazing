@@ -224,66 +224,7 @@ client.on('message', message => {
     return message.reply(`**حبي ممنوع نشر روابط الفيس بوك :joy: **`)
     }
 });
-//server-avatar
-client.on("message", message => {    
-    if(!message.channel.guild) return;
-if(message.author.bot) return;
-if(message.content === prefix + "server-av"){ 
-    const embed = new Discord.RichEmbed()
 
-.setTitle(`صورة ** ${message.guild.name} **`)
-.setAuthor(message.author.username, message.guild.iconrURL)
-.setColor('RANDOM')
-.setImage(message.guild.iconURL)
-
-message.channel.send({embed});
-}
-});
-
-//avatar
-client.on('message', message => {
-if (message.content.startsWith(prefix + "avatar")) {
-  var mentionned = message.mentions.users.first();
-var x5bzm;
-if(mentionned){
-    var x5bzm = mentionned;
-} else {
-    var x5bzm = message.author;
-    
-}
-  const embed = new Discord.RichEmbed()
-  .setColor("RANDOM")
-  .setImage(`${x5bzm.avatarURL}`)
-message.channel.sendEmbed(embed);
-}
-});
-client.on('message', message => {
-        let reason = message.content.split(" ").slice(2).join(" ")
-        let muterole = message.guild.roles.find("name", "muted")
-        let men = message.mentions.users.first()
-
-        if(message.content.startsWith(prefix + "mute")) {
-            if(!men) return message.channel.send("**Do you want me to mute you 🤔 ?, please @mention someone. `Ex. #mute @xRokz bad boy`**");
-            if(!reason) return message.channel.send("**Do you want me to mute " + men.username + " with no reason ?, `Ex. #mute @xRokz bad boy` or just use `none` for no reason **`")
-            if(!muterole) {
-                message.guild.createRole({name: "muted", color:"#505f74", permissions: [1115136]})
-
-            }
-            message.guild.member(men).addRole(muterole)
-                message.channel.send("**" + men.username + " has been muted! 🤐**")
-        }
-
-        if(message.content.startsWith(prefix + "unmute")) {
-            if(!men) return message.channel.send("**please @mention someone. `Ex. #unmute <@298732816995319809> bad boy`**");
-
-            if(!muterole) {
-                message.guild.createRole({name: "muted", color:"#505f74", permissions: [1115136]})
-
-            }
-            message.guild.member(men).removeRole(muterole)
-                message.channel.send("**" + men.username + " has been unmuted! 😀 **")
-        }
-    })
 
 
 
