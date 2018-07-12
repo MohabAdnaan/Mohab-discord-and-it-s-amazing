@@ -433,8 +433,7 @@ const Love = [  "**احبك / عدد قطرات المـــطر والشجر و
     }
 });
 client.on('message', function(message) {
-  var prefix = '$';
-    if(message.content.startsWith(prefix + 'قرعه')) {
+    if(message.content.startsWith('$قرعة')) {
         let args = message.content.split(" ").slice(1);
         if (!args[0]) {
             message.channel.send('حط رقم معين يتم السحب منه');
@@ -474,8 +473,7 @@ const R = [
    '*** روح اكل ملح + ليمون اذا مافيه اكل اي شيء من اختيار الي معك.  ***'
 ]
  client.on('message', message => {
-   var prefix = '$';
- if (message.content.startsWith(prefix + 'حكم')) {
+ if (message.content.startsWith('$حكم')) {
   var mariam= new Discord.RichEmbed()
   .setTitle("لعبة حكم ..")
   .setColor('RANDOM')
