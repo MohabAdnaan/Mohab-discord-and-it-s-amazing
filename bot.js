@@ -217,6 +217,14 @@ client.on('message', message => {
   console.log('[id] Send By: ' + message.author.username)
     }
 });
+client.on('message', message => {
+    var args = message.content.split(/[ ]+/)
+    if(message.content.includes('facebook.com/')){
+        message.delete()
+    return message.reply(`**حبي ممنوع نشر روابط الفيس بوك :joy: **`)
+    }
+});
+
 
 
 
